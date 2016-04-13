@@ -9,9 +9,18 @@ class simplePage:
         self.domain = domain
         self.url = url
 
+    def fakeHeader(self):
+        header={
+            "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:43.0) Gecko/20100101 Firefox/43.0",
+            "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "Host":"baidu.com"
+        }
+        return header
+
 
     def getItems(self, mark = 'a', className = None):
-        html = BeautifulSoup(urllib2.urlopen(self.url).read())
+        request = urllib2.Request(self.url, headers=self.fakeHeader())
+        html = BeautifulSoup(urllib2.urlopen(request).read())
         items = html.find_all(mark, class_ = className)
         return items
 
